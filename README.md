@@ -27,7 +27,8 @@ This is the place to add a short introduction.
 
 #### xarray:open_kwargs
 
-Keyword arguments to provide to the xarray opener, for example  [`xarray.open_zarr`](https://xarray.pydata.org/en/stable/generated/xarray.open_zarr.html). The opener should be determined by the media type of the asset.
+Keyword arguments to provide to the xarray opener, for example  [`xarray.open_zarr`](https://xarray.pydata.org/en/stable/generated/xarray.open_zarr.html).
+The opener should be determined by the media type of the asset.
 
 The are in addition to the positional argument, for example the `store`, which is obtained from the Assets `href`. For example, to specify [consolidated metadata](https://zarr.readthedocs.io/en/stable/tutorial.html):
 

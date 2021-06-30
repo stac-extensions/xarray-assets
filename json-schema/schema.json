@@ -21,10 +21,7 @@
             "properties": {
               "allOf": [
                 {
-                  "$comment": "Require fields here for item properties.",
-                  "required": [
-                    "template:new_field"
-                  ]
+                  "$comment": "Require fields here for item properties."
                 },
                 {
                   "$ref": "#/definitions/fields"
