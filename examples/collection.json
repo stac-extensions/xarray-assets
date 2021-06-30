@@ -30,9 +30,10 @@
   },
   "assets": {
     "example": {
-      "href": "https://example.com/examples/file.xyz",
+      "href": "abfs://cpdata/raw/terraclimate/4000m/raster.zarr",
+      "type": "application/vnd+zarr",
       "xarray:storage_options": {
-        "account_name": "test-account"
+        "account_name": "cpdataeuwest"
       },
       "xarray:open_kwargs": {
         "consolidated": true

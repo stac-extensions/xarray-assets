@@ -8,7 +8,10 @@
 - **Owner**: @TomAugspurger
 
 This document explains the Template Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
-This is the place to add a short introduction.
+
+This extension helps users to open Assets with [xarray](https://xarray.pydata.org/en/stable/). It gives a place
+for catalog maintainers to specify various required or recommended options.
+See [Python Example](#python-example) for an example of how consumers of this extension can use it to simplify data loading.
 
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
@@ -43,6 +46,43 @@ The are in addition to the positional argument, for example the `store`, which i
 #### xarray:storage_options
 
 [`fsspec.filesystem`](https://filesystem-spec.readthedocs.io/en/latest/api.html#fsspec.filesystem) enables opening a filesystem from URI (e.g. `abfs://path/to/blob`, `https://path/to/file`, `s3://path/to/file`). The various filesystems support and require backend-specific keyword arguments, which can be provided as `**storage_options`.
+
+## Python Example
+
+This example demonstrates how consumers of this extension can use the data to simplify the process of loading
+an asset from STAC into an xarray Dataset.
+
+```python
+>>> import fsspec, xarray, pystac
+>>> collection = pystac.read_file("examples/collection.json")
+>>> asset = collection.assets["example"]
+>>> asset.media_type
+'application/vnd+zarr'
+>>> store = fsspec.get_mapper(asset.href, **asset.properties["xarray:storage_options"])
+>>> ds = xarray.open_zarr(store, **asset.properties["xarray:open_kwargs"])
+>>> ds
+<xarray.Dataset>
+Dimensions:                 (crs: 1, lat: 4320, lon: 8640, time: 744)
+Coordinates:
+  * crs                     (crs) int16 3
+  * lat                     (lat) float64 89.98 89.94 89.9 ... -89.94 -89.98
+  * lon                     (lon) float64 -180.0 -179.9 -179.9 ... 179.9 180.0
+  * time                    (time) datetime64[ns] 1958-01-01 ... 2019-12-01
+Data variables: (12/18)
+    aet                     (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+    def                     (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+    pdsi                    (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+    pet                     (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+    ppt                     (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+    ppt_station_influence   (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+    ...                      ...
+    tmin                    (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+    tmin_station_influence  (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+    vap                     (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+    vap_station_influence   (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+    vpd                     (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+    ws                      (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+```
 
 ## Contributing
 
