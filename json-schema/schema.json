@@ -21,7 +21,10 @@
             "properties": {
               "allOf": [
                 {
-                  "$comment": "Require fields here for item properties."
+                  "$comment": "Require fields here for item properties.",
+                  "required": [
+                    "template:new_field"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/fields"
@@ -100,7 +103,6 @@
         },
         "xarray:storage_options": {
           "type": "object"
-          }
         }
       },
       "patternProperties": {
