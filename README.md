@@ -7,10 +7,12 @@
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
 - **Owner**: @TomAugspurger
 
-This document explains the Template Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
+This document explains the xarray Assets Extension to the
+[SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
 
-This extension helps users to open Assets with [xarray](https://xarray.pydata.org/en/stable/). It gives a place
-for catalog maintainers to specify various required or recommended options.
+This extension helps users open STAC Assets with [xarray](https://xarray.pydata.org/en/stable/). It gives a place
+for catalog maintainers to specify various required or recommended options. Without this extension,
+users would somehow need to know which options are required in order to load the dataset.
 See [Python Example](#python-example) for an example of how consumers of this extension can use it to simplify data loading.
 
 - Examples:
