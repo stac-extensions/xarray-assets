@@ -1,11 +1,11 @@
-# Template Extension Specification
+# xarray Assets Extension Specification
 
-- **Title:** Template
-- **Identifier:** <https://stac-extensions.github.io/template/v1.0.0/schema.json>
-- **Field Name Prefix:** template
-- **Scope:** Item, Collection
+- **Title:** xarray Assets
+- **Identifier:** <https://stac-extensions.github.io/xarray-assets/v1.0.0/schema.json>
+- **Field Name Prefix:** xarray
+- **Scope:** Asset
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
-- **Owner**: @your-gh-handles @person2
+- **Owner**: @TomAugspurger
 
 This document explains the Template Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
 This is the place to add a short introduction.
@@ -18,36 +18,30 @@ This is the place to add a short introduction.
 
 ## Item Properties and Collection Fields
 
-| Field Name           | Type                      | Description |
-| -------------------- | ------------------------- | ----------- |
-| template:new_field   | string                    | **REQUIRED**. Describe the required field... |
-| template:xyz         | [XYZ Object](#xyz-object) | Describe the field... |
-| template:another_one | \[number]                 | Describe the field... |
+| Field Name               | Type                      | Description                                           |
+| ------------------------ | ------------------------- | ----------------------------------------------------- |
+| xarray:open_kwargs       | Map<string, Any>          | Keyword arguments to provide to the xarray opener     |
+| xarray:storage_options   | Map<string, Any>          | Additional keywords to provide to `fsspec.filesystem` |
 
 ### Additional Field Information
 
-#### template:new_field
+#### xarray:open_kwargs
 
-This is a much more detailed description of the field `template:new_field`...
+Keyword arguments to provide to the xarray opener, for example  [`xarray.open_zarr`](https://xarray.pydata.org/en/stable/generated/xarray.open_zarr.html). The opener should be determined by the media type of the asset.
 
-### XYZ Object
+The are in addition to the positional argument, for example the `store`, which is obtained from the Assets `href`. For example, to specify [consolidated metadata](https://zarr.readthedocs.io/en/stable/tutorial.html):
 
-This is the introduction for the purpose and the content of the XYZ Object...
+```json
+{
+  "xarray:open_kwargs": {
+    "consolidated": true
+  }
+}
+```
 
-| Field Name  | Type   | Description |
-| ----------- | ------ | ----------- |
-| x           | number | **REQUIRED**. Describe the required field... |
-| y           | number | **REQUIRED**. Describe the required field... |
-| z           | number | **REQUIRED**. Describe the required field... |
+#### xarray:storage_options
 
-## Relation types
-
-The following types should be used as applicable `rel` types in the
-[Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object).
-
-| Type                | Description |
-| ------------------- | ----------- |
-| fancy-rel-type      | This link points to a fancy resource. |
+[`fsspec.filesystem`](https://filesystem-spec.readthedocs.io/en/latest/api.html#fsspec.filesystem) enables opening a filesystem from URI (e.g. `abfs://path/to/blob`, `https://path/to/file`, `s3://path/to/file`). The various filesystems support and require backend-specific keyword arguments, which can be provided as `**storage_options`.
 
 ## Contributing
 
