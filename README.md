@@ -4,7 +4,7 @@
 - **Identifier:** <https://stac-extensions.github.io/xarray-assets/v1.0.0/schema.json>
 - **Field Name Prefix:** xarray
 - **Scope:** Asset
-- **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
+- **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Pilot
 - **Owner**: @TomAugspurger
 
 This document explains the xarray Assets Extension to the
