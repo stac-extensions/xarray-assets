@@ -55,35 +55,54 @@ This example demonstrates how consumers of this extension can use the data to si
 an asset from STAC into an xarray Dataset.
 
 ```python
->>> import fsspec, xarray, pystac
->>> collection = pystac.read_file("examples/collection.json")
->>> asset = collection.assets["example"]
+>>> import pystac, planetary_computer, xarray as xr
+
+>>> collection = planetary_computer.sign(
+...     pystac.read_file("https://planetarycomputer.microsoft.com/api/stac/v1/collections/terraclimate")
+... )
+>>> asset = collection.assets["zarr-abfs"]
 >>> asset.media_type
-'application/vnd+zarr'
->>> store = fsspec.get_mapper(asset.href, **asset.properties["xarray:storage_options"])
->>> ds = xarray.open_zarr(store, **asset.properties["xarray:open_kwargs"])
+
+>>> ds = xr.open_dataset(
+...    asset.href,
+...    **asset.extra_fields["xarray:open_kwargs"]
+... )
 >>> ds
-<xarray.Dataset>
-Dimensions:                 (crs: 1, lat: 4320, lon: 8640, time: 744)
+<xarray.Dataset> Size: 2TB
+Dimensions:  (time: 768, lat: 4320, lon: 8640, crs: 1)
 Coordinates:
-  * crs                     (crs) int16 3
-  * lat                     (lat) float64 89.98 89.94 89.9 ... -89.94 -89.98
-  * lon                     (lon) float64 -180.0 -179.9 -179.9 ... 179.9 180.0
-  * time                    (time) datetime64[ns] 1958-01-01 ... 2019-12-01
-Data variables: (12/18)
-    aet                     (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
-    def                     (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
-    pdsi                    (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
-    pet                     (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
-    ppt                     (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
-    ppt_station_influence   (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
-    ...                      ...
-    tmin                    (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
-    tmin_station_influence  (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
-    vap                     (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
-    vap_station_influence   (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
-    vpd                     (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
-    ws                      (time, lat, lon) float32 dask.array<chunksize=(12, 1440, 1440), meta=np.ndarray>
+  * crs      (crs) int16 2B 3
+  * lat      (lat) float64 35kB 89.98 89.94 89.9 89.85 ... -89.9 -89.94 -89.98
+  * lon      (lon) float64 69kB -180.0 -179.9 -179.9 ... 179.9 179.9 180.0
+  * time     (time) datetime64[ns] 6kB 1958-01-01 1958-02-01 ... 2021-12-01
+Data variables: (12/14)
+    aet      (time, lat, lon) float32 115GB dask.array<chunksize=(12, 1024, 1024), meta=np.ndarray>
+    def      (time, lat, lon) float32 115GB dask.array<chunksize=(12, 1024, 1024), meta=np.ndarray>
+    pdsi     (time, lat, lon) float32 115GB dask.array<chunksize=(12, 1024, 1024), meta=np.ndarray>
+    pet      (time, lat, lon) float32 115GB dask.array<chunksize=(12, 1024, 1024), meta=np.ndarray>
+    ppt      (time, lat, lon) float64 229GB dask.array<chunksize=(12, 1024, 1024), meta=np.ndarray>
+    q        (time, lat, lon) float64 229GB dask.array<chunksize=(12, 1024, 1024), meta=np.ndarray>
+    ...       ...
+    swe      (time, lat, lon) float64 229GB dask.array<chunksize=(12, 1024, 1024), meta=np.ndarray>
+    tmax     (time, lat, lon) float32 115GB dask.array<chunksize=(12, 1024, 1024), meta=np.ndarray>
+    tmin     (time, lat, lon) float32 115GB dask.array<chunksize=(12, 1024, 1024), meta=np.ndarray>
+    vap      (time, lat, lon) float32 115GB dask.array<chunksize=(12, 1024, 1024), meta=np.ndarray>
+    vpd      (time, lat, lon) float32 115GB dask.array<chunksize=(12, 1024, 1024), meta=np.ndarray>
+    ws       (time, lat, lon) float32 115GB dask.array<chunksize=(12, 1024, 1024), meta=np.ndarray>
+Attributes: (12/52)
+    Conventions:                     CF-1.6
+    acknowledgment:                  Please cite the references included here...
+    cdm_data_type:                   GRID
+    contributor_email:               khegewisch@ucmerced.edu
+    contributor_name:                Katherine Hegewisch
+    contributor_role:                Postdoctoral Fellow
+    ...                              ...
+    time_coverage_duration:          P1Y
+    time_coverage_end:               1958-12-01T00:0
+    time_coverage_resolution:        P1M
+    time_coverage_start:             1958-01-01T00:0
+    title:                           TerraClimate: monthly climate and climat...
+    version:                         v1.0
 ```
 
 ## Contributing
