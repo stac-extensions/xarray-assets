@@ -15,6 +15,8 @@ for catalog maintainers to specify various required or recommended options. With
 users would somehow need to know which options are required in order to load the dataset.
 See [Python Example](#python-example) for an example of how consumers of this extension can use it to simplify data loading.
 
+See also [xpystac](https://github.com/stac-utils/xpystac), which enables opening a variety of STAC assets with xarray.
+
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
   - [Collection example](examples/collection.json): Shows the basic usage of the extension in a STAC Collection
