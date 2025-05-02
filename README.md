@@ -4,8 +4,21 @@
 - **Identifier:** <https://stac-extensions.github.io/xarray-assets/v1.0.0/schema.json>
 - **Field Name Prefix:** xarray
 - **Scope:** Asset
-- **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Pilot
+- **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Deprecated
 - **Owner**: @TomAugspurger
+
+
+# Deprecation Notice
+
+This extension has been deprecated. While useful, it ended up being to specific to xarray and Python.
+Instead of this extension, we recommend the following extensions and libraries to enable opening
+xarray Datasets from a STAC item / asset:
+
+1. A new `zarr` extension to capture metadata about a Zarr hierarchy, like whether it is `consolidated`.
+2. The [`storage` extension](https://github.com/stac-extensions/storage) for additional storage-specific information
+3. The [xpystac](https://github.com/stac-utils/xpystac) library for opening xarray datasets from STAC metadata, rather than manually extracting information and calling `xarray.open_dataset` directly.
+
+# Description
 
 This document explains the xarray Assets Extension to the
 [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
