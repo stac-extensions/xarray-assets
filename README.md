@@ -14,7 +14,7 @@ This extension has been deprecated. While useful, it ended up being to specific 
 Instead of this extension, we recommend the following extensions and libraries to enable opening
 xarray Datasets from a STAC item / asset:
 
-1. A new `zarr` extension to capture metadata about a Zarr hierarchy, like whether it is `consolidated`.
+1. A yet to create `zarr` extension to capture metadata about a Zarr hierarchy, like whether it is `consolidated`. Proposals are welcome.
 2. The [`storage` extension](https://github.com/stac-extensions/storage) for additional storage-specific information
 3. The [xpystac](https://github.com/stac-utils/xpystac) library for opening xarray datasets from STAC metadata, rather than manually extracting information and calling `xarray.open_dataset` directly.
 
